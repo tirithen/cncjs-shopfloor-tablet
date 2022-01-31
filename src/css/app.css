@@ -165,6 +165,8 @@ body {
 [data-route="workspace"] textarea {
     font-size: 9px;
     resize: none;
+    background: #111;
+    color: #fff;
 }
 
 [data-route="workspace"] .axis-position .btn {

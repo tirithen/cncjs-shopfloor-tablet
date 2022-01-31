@@ -282,6 +282,7 @@
 
             <div class="mdi">
                 <div class="code">
+                    <textarea class="messages" id="messages" rows="10" spellcheck="false" readonly>Serial Messages</textarea>
                     <div class="code__row">
                         <input type="text" class="form-control mdifield" id="mditext0" placeholder="GCode Command" onFocus="cnc.inputFocused=true" onBlur="cnc.inputFocused=false">
                         <button type="button" class="btn btn-default mdi-go" title="Submit GCode Command" onclick="cnc.MDI('mditext0')">
@@ -306,7 +307,6 @@
                         </button>
                         <input type="file" class="btn btn-default file" accept=".nc,.ngc,.gcode" onchange="event => console.log(); cnc.loadGCodeFile(event.target.files?.[0])">
                     </div>
-                    <textarea class="messages" id="messages" rows="10" spellcheck="false" readonly>Serial Messages</textarea>
                 </div>
                 <textarea class="gcode" id="gcode" rows="8" placeholder="GCode File Display" spellcheck="false" readonly></textarea>
                 <div class="preview">
