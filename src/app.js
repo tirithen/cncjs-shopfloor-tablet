@@ -195,7 +195,7 @@ cnc.toggleUnits = function() {
 	controller.command('gcode', 'G20');
     } else {
 	controller.command('gcode', 'G21');
-    }	
+    }
     // No need to fix the button label, as that will be done by the status watcher
 }
 
@@ -756,18 +756,18 @@ cnc.doRightButton = function() {
             selector.append($("<option/>").text('30'));
             selector.val('1');
         } else  {
-            $('[data-route="workspace"] [id="jog00"]').text('0.01');
-            $('[data-route="workspace"] [id="jog01"]').text('0.1');
-            $('[data-route="workspace"] [id="jog02"]').text('1');
-            $('[data-route="workspace"] [id="jog03"]').text('10');
-            $('[data-route="workspace"] [id="jog10"]').text('0.03');
-            $('[data-route="workspace"] [id="jog11"]').text('0.3');
-            $('[data-route="workspace"] [id="jog12"]').text('3');
-            $('[data-route="workspace"] [id="jog13"]').text('30');
-            $('[data-route="workspace"] [id="jog20"]').text('0.05');
-            $('[data-route="workspace"] [id="jog21"]').text('0.5');
-            $('[data-route="workspace"] [id="jog22"]').text('5');
-            $('[data-route="workspace"] [id="jog23"]').text('50');
+            $('[data-route="workspace"] [id="jog00"]').text('0.1');
+            $('[data-route="workspace"] [id="jog01"]').text('1');
+            $('[data-route="workspace"] [id="jog02"]').text('10');
+            $('[data-route="workspace"] [id="jog03"]').text('100');
+            $('[data-route="workspace"] [id="jog10"]').text('0.3');
+            $('[data-route="workspace"] [id="jog11"]').text('3');
+            $('[data-route="workspace"] [id="jog12"]').text('30');
+            $('[data-route="workspace"] [id="jog13"]').text('200');
+            $('[data-route="workspace"] [id="jog20"]').text('0.5');
+            $('[data-route="workspace"] [id="jog21"]').text('5');
+            $('[data-route="workspace"] [id="jog22"]').text('50');
+            $('[data-route="workspace"] [id="jog23"]').text('300');
             selector.append($("<option/>").text('0.005'));
             selector.append($("<option/>").text('0.01'));
             selector.append($("<option/>").text('0.03'));
@@ -782,7 +782,9 @@ cnc.doRightButton = function() {
             selector.append($("<option/>").text('30'));
             selector.append($("<option/>").text('50'));
             selector.append($("<option/>").text('100'));
+            selector.append($("<option/>").text('200'));
             selector.append($("<option/>").text('300'));
+            selector.append($("<option/>").text('500'));
             selector.append($("<option/>").text('1000'));
             selector.val('10');
         }
@@ -893,13 +895,13 @@ cnc.updateView = function() {
         x: Number(mpos.x).toFixed(digits),
         y: Number(mpos.y).toFixed(digits),
         z: Number(mpos.z).toFixed(digits),
-        a: Number(mpos.a).toFixed(2)
+        a: Number(mpos.a || 0).toFixed(2)
     };
     var dwpos = {
         x: Number(wpos.x).toFixed(digits),
         y: Number(wpos.y).toFixed(digits),
         z: Number(wpos.z).toFixed(digits),
-        a: Number(wpos.a).toFixed(2)
+        a: Number(wpos.a || 0).toFixed(2)
     };
 
     $('[data-route="workspace"] [id="wpos-x"]').prop('value', dwpos.x);
@@ -1066,6 +1068,20 @@ cnc.loadGCode = function() {
 }
 
 $('[data-route="workspace"] select[data-name="select-file"]').change(cnc.loadGCode);
+
+cnc.loadGCodeFile = function(file) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+        controller.command('gcode:load', file.name, reader.result, (err) => {
+            if (err) {
+                alert(`Failed to load gcode: ${err.message}`);
+            }
+        });
+    }, { once: true });
+
+    reader.readAsText(file);
+}
 
 function nthLineEnd(str, n){
     if (n <= 0)
