@@ -9,6 +9,11 @@ body {
     overflow: hidden;
     background: #000;
     color: #fff;
+
+    --color-x: #ffc8c8;
+    --color-y: #c8ffc8;
+    --color-z: #c8e5ff;
+    --color-a: #ffe7c8;
 }
 
 .status-contols {
@@ -128,6 +133,22 @@ input[type=number][readonly] {
     padding-right: 1em;
 }
 
+[data-route="workspace"] .axis-position__state--x input {
+    color: var(--color-x);
+}
+
+[data-route="workspace"] .axis-position__state--y input {
+    color: var(--color-y);
+}
+
+[data-route="workspace"] .axis-position__state--z input {
+    color: var(--color-z);
+}
+
+[data-route="workspace"] .axis-position__state--a input {
+    color: var(--color-a);
+}
+
 [data-route="workspace"] .form-control#filelist {
     min-width: 6em;
 }
@@ -142,7 +163,7 @@ input[type=number][readonly] {
     display: flex;
     gap: 10px;
     flex-direction: column;
-    padding: 10px;
+    padding: 10px 10px 20px;
 }
 
 [data-route="workspace"] .jog-controls__row {
@@ -165,9 +186,9 @@ input[type=number][readonly] {
 }
 
 [data-route="workspace"] .axis-position {
-    padding: 10px;
+    padding: 10px 10px 20px;
     display: grid;
-    grid-template-columns: 1fr 2fr 2fr 2fr 2fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 10px;
 }
 
@@ -181,6 +202,7 @@ input[type=number][readonly] {
 [data-route="workspace"] .axis-position__state {
     display: grid;
     gap: 10px;
+    row-gap: 0;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
         'label position position'
@@ -283,6 +305,7 @@ select.form-control,
 
 [data-route="workspace"] .btn-units {
     text-align: left;
+    max-width: 4em;
 }
 
 [data-route="workspace"] .rotate-45deg {
@@ -509,7 +532,7 @@ select.form-control,
     }
 
     [data-route="workspace"] .axis-label {
-        font-size: 32px;
+        font-size: 42px;
     }
 
     [data-route="workspace"] .dropdown-menu {
@@ -528,7 +551,8 @@ select.form-control,
     }
 
     [data-route="workspace"] .position {
-        font-size: 28px;
+        font-size: 42px;
+        height: 60px;
     }
 
     [data-route="workspace"] textarea {

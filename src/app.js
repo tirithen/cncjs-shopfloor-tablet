@@ -692,16 +692,17 @@ controller.on('TinyG:state', function(data) {
     cnc.updateView();
 });
 
-setButton = function(name, isEnabled, color, text) {
+setButton = function(name, isEnabled, color, borderColor, text) {
     var button = $('[data-route="workspace"] .nav-panel ' + name);
     button.prop('disabled', !isEnabled);
     button.prop('style').backgroundColor = color;
+    button.prop('style').borderColor = borderColor;
     button.prop('innerText', text);
 }
 
 var leftButtonHandler;
-setLeftButton = function(isEnabled, color, text, click) {
-    setButton('.btn-start', isEnabled, color, text);
+setLeftButton = function(isEnabled, color, borderColor, text, click) {
+    setButton('.btn-start', isEnabled, color, borderColor, text);
     leftButtonHandler = click;
 }
 cnc.doLeftButton = function() {
@@ -711,8 +712,8 @@ cnc.doLeftButton = function() {
 }
 
 var rightButtonHandler;
-setRightButton = function(isEnabled, color, text, click) {
-    setButton('.btn-pause', isEnabled, color, text);
+setRightButton = function(isEnabled, color, borderColor, text, click) {
+    setButton('.btn-pause', isEnabled, color, borderColor, text);
     rightButtonHandler = click;
 }
 cnc.doRightButton = function() {
@@ -810,33 +811,37 @@ cnc.updateView = function() {
     // $('[data-route="workspace"] [id="units"]').text(modal.units == 'G21' ? 'mm' : 'Inch');
     $('[data-route="workspace"] [id="units"]').prop('disabled', cnc.controllerType == 'Marlin');
 
-    var green = '#86f686';
+    var green = '#3c813c';
+    var greenBorder = '#6ebd6e';
     var red = '#f64646';
-    var gray = '#f6f6f6';
+    var redBorder = '#fb9494';
+    var gray = '#cdcdcd';
+    var grayBorder = '#fff';
+
     switch (machineWorkflow) {
     case MACHINE_STALL:
-        setLeftButton(true, gray, 'Start', null);
-        setRightButton(false, gray, 'Pause', null);
+        setLeftButton(true, gray, grayBorder, 'Start', null);
+        setRightButton(false, gray, grayBorder, 'Pause', null);
         break;
     case MACHINE_STOP:
     case MACHINE_IDLE:
         if (gCodeLoaded) {
             // A GCode file is ready to go
-            setLeftButton(true, green, 'Start', runGCode);
-            setRightButton(false, gray, 'Pause', null);
+            setLeftButton(true, green, greenBorder, 'Start', runGCode);
+            setRightButton(false, gray, grayBorder, 'Pause', null);
         } else {
             // Can't start because no GCode to run
-            setLeftButton(false, gray, 'Start', null);
-            setRightButton(false, gray, 'Pause', null);
+            setLeftButton(false, gray, grayBorder, 'Start', null);
+            setRightButton(false, gray, grayBorder, 'Pause', null);
         }
         break;
     case MACHINE_HOLD:
-        setLeftButton(true, green, 'Resume', resumeGCode);
-        setRightButton(true, red, 'Stop', stopGCode);
+        setLeftButton(true, green, greenBorder, 'Resume', resumeGCode);
+        setRightButton(true, red, redBorder, 'Stop', stopGCode);
         break;
     case MACHINE_RUN:
-        setLeftButton(false, gray, 'Start', null);
-        setRightButton(true, red, 'Pause', pauseGCode);
+        setLeftButton(false, gray, grayBorder, 'Start', null);
+        setRightButton(true, red, redBorder, 'Pause', pauseGCode);
         break;
     }
 

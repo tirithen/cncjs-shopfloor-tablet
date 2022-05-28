@@ -11,7 +11,7 @@ $(function() {
 
     tp.lineWidth = 0.1;
     tp.lineCap = 'round';
-    tp.strokeStyle = 'blue';
+    tp.strokeStyle = '#82aeff';
 
     var units = 'G21';
 
@@ -61,7 +61,7 @@ $(function() {
 
     var drawOrigin = function(radius) {
         tp.beginPath();
-        tp.strokeStyle = 'red';
+        tp.strokeStyle = 'yellow';
         tp.arc(0, 0, radius, 0, Math.PI*2, false);
         tp.moveTo(-radius*1.5, 0);
         tp.lineTo(radius*1.5, 0);
@@ -86,7 +86,7 @@ $(function() {
 
         // Reset the transform and clear the canvas
         tp.setTransform(1,0,0,1,0,0);
-        tp.fillStyle = "white";
+        tp.fillStyle = "black";
         tp.fillRect(0, 0, canvas.width, canvas.height);
 
         var imageWidth;
@@ -130,8 +130,8 @@ $(function() {
         // Show the X and Y limit coordinates of the GCode program.
         // We do this before scaling because after we invert the Y coordinate,
         // text would be displayed upside-down.
-        tp.fillStyle = "black";
-        tp.font = "14px Ariel";
+        tp.fillStyle = "white";
+        tp.font = "15px 'Share Tech Mono'";
         tp.textAlign = "center";
         tp.textBaseline = "bottom";
         tp.fillText(formatLimit(bbox.min.y), imageRight/2, canvas.height-inset);
@@ -296,9 +296,9 @@ $(function() {
         addLine: function(modal, start, end) {
             var motion = modal.motion;
             if (motion == 'G0') {
-                tp.strokeStyle = initialMoves ? 'red' : 'green';
+                tp.strokeStyle = initialMoves ? 'yellow' : 'orange';
             } else {
-                tp.strokeStyle = 'blue';
+                tp.strokeStyle = '#82aeff';
                 // Don't cancel initialMoves on no-motion G1 (e.g. G1 F30)
                 // or on Z-only moves
                 if (start.x != end.x || start.y != end.y) {
@@ -328,7 +328,7 @@ $(function() {
             initialMoves = false;
 
             tp.beginPath();
-            tp.strokeStyle = 'blue';
+            tp.strokeStyle = '#82aeff';
             tp.arc(center.x, center.y, radius, theta1, theta2, modal.motion == 'G2');
             tp.stroke();
         },
